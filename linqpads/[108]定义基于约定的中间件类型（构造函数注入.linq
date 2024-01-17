@@ -43,3 +43,4 @@ public class GreetingMiddleware{
 	public Task InvokeAsync(HttpContext context)=> context.Response.WriteAsync(_greeter.Greet(DateTimeOffset.Now));
 }
 
+// 为什么基于约定的不需要AddSingleton？？？
