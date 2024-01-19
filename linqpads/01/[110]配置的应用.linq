@@ -9,7 +9,6 @@
   <IncludeAspNet>true</IncludeAspNet>
 </Query>
 
-
 string demoFilePath = Path.Combine(AppContext.BaseDirectory, "appsettings.json");
 string json = @"
 {
