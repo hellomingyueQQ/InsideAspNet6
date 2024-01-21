@@ -29,7 +29,8 @@ var builder = WebApplication.CreateBuilder(new string[] { });
 builder.Services
 	.AddSingleton<IGreeter, Greeter>()
 	.Configure<GreetingOptions>(builder.Configuration.GetSection("greeting"))
-	.AddControllers().AddApplicationPart(Assembly.GetExecutingAssembly());
+	.AddControllers()
+	.AddApplicationPart(Assembly.GetExecutingAssembly());
 var app = builder.Build();
 app.MapControllers();
 app.Run();
