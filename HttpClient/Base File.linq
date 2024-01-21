@@ -18,6 +18,24 @@
   <IncludeAspNet>true</IncludeAspNet>
 </Query>
 
+#region appsettings.json
+
+string demoFilePath = Path.Combine(AppContext.BaseDirectory, "appsettings.json");
+string json = @"
+{
+""Logging"": {
+
+	""LogLevel"": {
+	""Default"": ""Warning"",
+      ""Microsoft.AspNetCore"": ""Warning""
+	}
+  },
+  ""AllowedHosts"": ""*""
+}";
+
+File.WriteAllText(demoFilePath, json);
+
+#endregion
 
 var builder = WebApplication.CreateBuilder(new string[] { });
 builder.Services.AddHttpClient();
@@ -28,6 +46,8 @@ var app = builder.Build();
 app.MapControllers();
 app.Run();
 
+
+#region Controllers
 
 [Route("api/[controller]")]
 [ApiController]
@@ -70,6 +90,9 @@ public class WeatherController
 		return forecast;
 	}
 }
+#endregion
+
+#region Services
 
 public interface IIntegrationService
 {
@@ -87,10 +110,11 @@ public class CRUDSamples : IIntegrationService
 
 	public async Task RunAsync()
 	{
-		 await GetResourceAsync();
+		await GetResourceAsync();
 	}
 
-	public async Task GetResourceAsync() {
+	public async Task GetResourceAsync()
+	{
 		var httpClient = _httpClientFactory.CreateClient("MoviesAPIClient");
 		httpClient.BaseAddress = new Uri("http://localhost:5000");
 		httpClient.Timeout = new TimeSpan(0, 0, 30);
@@ -99,10 +123,20 @@ public class CRUDSamples : IIntegrationService
 	}
 }
 
+#endregion
+
+#region Models
+
 public record WeatherForecast(DateOnly Date, int TemperatureC, string? Summary)
 {
 	public int TemperatureF => 32 + (int)(TemperatureC / 0.5556);
 }
+
+#endregion
+
+
+//http://localhost:5000/api/greeting/greet
+
 
 
 // AddControllers扩展方法注册了与Controller相关服务的注册。在WebApplication对象被构建出来后，我们调用了它的MapControllers扩展方法将定义在所有Controller类型中的Action方法映射为对应的终结点。
