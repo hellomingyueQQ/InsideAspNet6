@@ -14,6 +14,15 @@
 string demoFilePath = Path.Combine(AppContext.BaseDirectory, "appsettings.json");
 string json = @"
 {
+""Logging"": {
+
+	""LogLevel"": {
+	""Default"": ""Information"",
+      ""Microsoft.AspNetCore"": ""Warning""
+	}
+  },
+  ""AllowedHosts"": ""*""
+,
   ""greeting"": {
 
 	""morning"": ""Good morning!"",
@@ -53,7 +62,7 @@ public class Greeter : IGreeter
 			var h when h >= 12 && h < 17 => _options.Afternoon,
 			_ => _options.Evening
 		};
-		_logger.LogInformation(message:"{time}={message}", time, message);
+		_logger.LogInformation(message: "{time}={message}", time, message);
 		return message;
 	}
 }
