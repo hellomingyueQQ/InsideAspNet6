@@ -1,13 +1,22 @@
-<Query Kind="Statements" />
+<Query Kind="Statements">
+  <Namespace>LINQPad.Controls</Namespace>
+  <Namespace>System.Net.Http</Namespace>
+  <Namespace>System.Threading.Tasks</Namespace>
+</Query>
 
-var search = new Regex (@"httpclient", RegexOptions.IgnoreCase);
 
-var queries =
-	from query in Util.GetMyQueries().Concat (Util.GetSamples()).AsParallel().AsOrdered()
-	where query.IsCSharp || query.IsSQL
-	let matches = search.Matches (query.Text)
-	where matches.Count > 0 || search.IsMatch (query.Name)
-	group new { Query = query.OpenLink, Matches = query.FormatMatches (matches) } by query.Location;
+var table = new Table(noBorders: true, cellVerticalAlign: "middle");
+table.Rows.Add(new TextBox() { Text = "http://localhost:5000/greeting/greet" }, new Button("Click", b =>
+{
+	Task.Run(async() =>
+	{
 
-foreach (var item in queries)
-	item.ToArray().Dump (item.Key);
+		using (HttpClient client = new HttpClient())
+		{
+			string text = await client.GetStringAsync("http://localhost:5000/greeting/greet");
+			text.Dump();
+		}
+	});
+}));
+
+table.Dump();    
