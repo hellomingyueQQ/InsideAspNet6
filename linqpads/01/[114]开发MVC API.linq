@@ -35,10 +35,10 @@ var app = builder.Build();
 app.MapControllers();
 app.Run();
 
-
+[Route("[Controller]")]
 public class GreetingController
 {
-	[HttpGet("/greet")]
+	[HttpGet("greet")]
 	public string Greet([FromServices] IGreeter greeter) => greeter.Greet(DateTimeOffset.Now);
 }
 
