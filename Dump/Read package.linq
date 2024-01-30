@@ -46,6 +46,8 @@ class Program
 	}
 }
 
+// sql格式化输出，试试linqpad的技术
+
 class Package
 {
 	public string Id { get; }
