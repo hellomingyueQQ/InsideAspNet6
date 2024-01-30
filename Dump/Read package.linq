@@ -37,7 +37,7 @@ class Program
 			Package package = new Package(id, version, targetFramework);
 			packages.Add(package);
 		}
-
+        packages = packages.OrderBy(x=>x.Id).ToList();
 		// 打印集合中的 Package 信息
 		foreach (Package package in packages)
 		{
